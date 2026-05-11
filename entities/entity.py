@@ -8,6 +8,9 @@ class Entity:
         self.components = {}
         self.handler = None
 
-    def update(self): pass
-    def render(self, surface, ref_pos): pass
-    def delete(self): pass
+    def update(self):
+        pass
+    def render(self, surface, ref_pos):
+        pass
+    def delete(self):
+        pass

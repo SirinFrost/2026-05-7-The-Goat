@@ -1,7 +1,9 @@
 import pygame
+import uuid
 
 class Player:
     def __init__(self, x, y, width, height):
+        self.id = uuid.uuid4()
         self.x = x
         self.y = y
         self.width = width

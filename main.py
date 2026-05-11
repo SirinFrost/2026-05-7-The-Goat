@@ -1,6 +1,9 @@
 import pygame
 import math
 
+from entities.entity import Entity
+from handlers.entity_handler import EntityHandler
+
 from player import Player
 
 
@@ -17,24 +20,14 @@ def game_loop(window):
     running = True
 
     player = Player(680, 360, 100, 100)
+    entity_handler = EntityHandler()
+    entity_handler.add_entity(player)
+
     while running:
         # 1. Event handling
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                running = False
-
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_a]:
-            player.x -= player.speed
-        if keys[pygame.K_d]:
-            player.x += player.speed
-        if keys[pygame.K_w]:
-            player.y -= player.speed
-        if keys[pygame.K_s]:
-            player.y += player.speed
-
-        player.rect.x = player.x
-        player.rect.y = player.y
+                running = False 
 
         window.fill((155, 69, 0))   # clear screen
         # 2. Update
