@@ -39,17 +39,19 @@ def game_loop(window):
         window.fill((155, 69, 0))   # clear screen
         # 2. Update
         # (game logic goes here)
+<<<<<<< Updated upstream
 
         pygame.draw.rect(window, player.color, player.rect)
         
         # Draw shapes
+=======
+>>>>>>> Stashed changes
 
-    
-
-
-        # 3. Render
-
-        # (draw calls go here)
+        pygame.draw.rect(window, player.color, player.rect)
+        
+        # Draw shapes
+)
+calls go here)
         pygame.display.update()
 
     pygame.quit()

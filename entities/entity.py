@@ -1,5 +1,8 @@
 import pygame
+<<<<<<< Updated upstream
 import uuid
+=======
+>>>>>>> Stashed changes
 
 class Entity:
     def __init__(self, x, y, width, height):
