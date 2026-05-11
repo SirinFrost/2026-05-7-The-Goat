@@ -29,6 +29,20 @@ def game_loop(window):
             if event.type == pygame.QUIT:
                 running = False 
 
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_a]:
+            player.x -= player.speed
+        if keys[pygame.K_d]:
+            player.x += player.speed
+        if keys[pygame.K_w]:
+            player.y -= player.speed
+        if keys[pygame.K_s]:
+            player.y += player.speed
+
+        player.rect.x = player.x
+        player.rect.y = player.y
+
+
         window.fill((155, 69, 0))   # clear screen
         # 2. Update
         # (game logic goes here)
