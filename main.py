@@ -19,9 +19,13 @@ def game_loop(window):
     pygame.display.set_caption("The Goat")
     running = True
 
-    player = Player(680, 360, 100, 100)
     entity_handler = EntityHandler()
+
+    player = Player(680, 360, 100, 100)
     entity_handler.add_entity(player)
+
+    square = Entity(680, 360, 100, 100)
+    entity_handler.add_entity(square)
 
     while running:
         # 1. Event handling
@@ -42,7 +46,7 @@ def game_loop(window):
         player.rect.x = player.x
         player.rect.y = player.y
 
-
+        # Anything being drawn on the screen goes AFTER FILLING THE SCREEN
         window.fill((155, 69, 0))   # clear screen
         # 2. Update
         # (game logic goes here)
@@ -55,7 +59,7 @@ def game_loop(window):
         
         # Draw shapes
 
-        pygame.display.update()
+        pygame.display.flip()
 
     pygame.quit()
 
