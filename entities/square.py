@@ -28,8 +28,7 @@ class Square(Entity):
             self.y += self.speed
         self.rect.x = self.x
         self.rect.y = self.y
-        self.rect.x = self.x
-        self.rect.y = self.y
+
 
     
     def render(self, surface, ref_pos):

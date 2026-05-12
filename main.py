@@ -32,21 +32,13 @@ def game_loop(window):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False 
-
-        square.rect.x = square.x
-        square.rect.y = square.y
-
         # Anything being drawn on the screen goes AFTER FILLING THE SCREEN
         window.fill((155, 69, 0))   # clear screen
         # 2. Update
         # (game logic goes here)
         # Draw shapes
-
-
         entity_handler.update()
-        
-        # Draw shapes
-        pygame.draw.rect(window, square.color, square.rect)
+        entity_handler.render(window, (0, 0))
 
         #update window
         pygame.display.flip()
