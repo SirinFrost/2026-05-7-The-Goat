@@ -3,8 +3,8 @@ import math
 
 from entities.entity import Entity
 from handlers.entity_handler import EntityHandler
+from entities.square import Square
 
-from player import Player
 
 
 pygame.init()
@@ -21,10 +21,10 @@ def game_loop(window):
 
     entity_handler = EntityHandler()
 
-    player = Player(680, 360, 100, 100)
-    entity_handler.add_entity(player)
+    #player = Player(680, 360, 100, 100)
+    #entity_handler.add_entity(player)
 
-    square = Entity(680, 360, 100, 100)
+    square = Square(680, 360, 100, 100)
     entity_handler.add_entity(square)
 
     while running:
@@ -33,34 +33,23 @@ def game_loop(window):
             if event.type == pygame.QUIT:
                 running = False 
 
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_a]:
-            player.x -= player.speed
-        if keys[pygame.K_d]:
-            player.x += player.speed
-        if keys[pygame.K_w]:
-            player.y -= player.speed
-        if keys[pygame.K_s]:
-            player.y += player.speed
-
-        player.rect.x = player.x
-        player.rect.y = player.y
+        square.rect.x = square.x
+        square.rect.y = square.y
 
         # Anything being drawn on the screen goes AFTER FILLING THE SCREEN
         window.fill((155, 69, 0))   # clear screen
         # 2. Update
         # (game logic goes here)
-        pygame.draw.rect(window, player.color, player.rect)
-        
         # Draw shapes
 
 
-        pygame.draw.rect(window, player.color, player.rect)
+        entity_handler.update()
         
         # Draw shapes
+        pygame.draw.rect(window, square.color, square.rect)
 
+        #update window
         pygame.display.flip()
-
     pygame.quit()
 
 
