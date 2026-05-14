@@ -35,7 +35,7 @@ def game_loop(window):
 
     # 100 random square entities
     # Random Positions
-    # Random velcoties
+    # Random velocities
     # Random colors
     for i in range(100):
         x_velocity = random.randint(-10, 10)
