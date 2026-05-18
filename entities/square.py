@@ -1,6 +1,7 @@
 from entities.entity import Entity
 import pygame
 import uuid
+from components.control_component import ControlComponent
 
 class Square(Entity):
     def __init__(self, x, y, width, height, vx , vy):
@@ -21,15 +22,8 @@ class Square(Entity):
     def update(self):
         super().update()
         # Keyboard controlled movement
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_a]:
-            self.x -= self.speed
-        if keys[pygame.K_d]:
-            self.x += self.speed
-        if keys[pygame.K_w]:
-            self.y -= self.speed
-        if keys[pygame.K_s]:
-            self.y += self.speed
+        control_component = ControlComponent(self, self.speed)
+        self.components[ControlComponent] = control_component
 
         # Wall collision based bouncing.
         # if self.x < 0:
@@ -64,5 +58,7 @@ class Square(Entity):
 
     
     def render(self, surface, ref_pos):
-        super().render(surface, ref_pos)
+        for component in self.components.values():
+            component.render(surface, ref_pos)
         surface.blit(self.image, self.rect)
+        

@@ -21,7 +21,7 @@ class HunnedSquares(Entity):
     def update(self):
         super().update()
         # Keyboard controlled movement
-
+        
 
         # Wall collision based bouncing.
         if self.x < 0:
