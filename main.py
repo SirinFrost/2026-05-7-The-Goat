@@ -30,23 +30,23 @@ def game_loop(window):
     #player = Player(680, 360, 100, 100)
     #entity_handler.add_entity(player)
 
-    # square = Square(680, 360, 100, 100, x_velocity, y_velocity)
-    # entity_handler.add_entity(square)
+    square = Square(680, 360, 100, 100, x_velocity, y_velocity)
+    entity_handler.add_entity(square)
 
     # 100 random square entities
     # Random Positions
     # Random velocities
     # Random colors
-    for i in range(100):
-        x_velocity = random.randint(-10, 10)
-        y_velocity = random.randint(-10, 10)
-        negtentoten1 = random.randint(-10, 10)
-        negtentoten2 = random.randint(-10, 10)
-        random0to1280 = random.randint(100, 1280)
-        random0to720 = random.randint(100, 720)
-        randomsize = random.randint(10, 100)
-        rand_square = HunnedSquares(random0to1280 - randomsize, random0to720 - randomsize, randomsize, randomsize, negtentoten1, negtentoten2)
-        entity_handler.add_entity(rand_square)
+    # for i in range(100):
+    #     x_velocity = random.randint(-10, 10)
+    #     y_velocity = random.randint(-10, 10)
+    #     negtentoten1 = random.randint(-10, 10)
+    #     negtentoten2 = random.randint(-10, 10)
+    #     random0to1280 = random.randint(100, 1280)
+    #     random0to720 = random.randint(100, 720)
+    #     randomsize = random.randint(10, 100)
+    #     rand_square = HunnedSquares(random0to1280 - randomsize, random0to720 - randomsize, randomsize, randomsize, negtentoten1, negtentoten2)
+    #     entity_handler.add_entity(rand_square)
 
     while running:
         # 1. Event handling
