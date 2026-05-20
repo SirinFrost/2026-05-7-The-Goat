@@ -4,8 +4,8 @@ import uuid
 import random
 
 class HunnedSquares(Entity):
-    def __init__(self, x, y, width, height, vx , vy):
-        super().__init__(x, y, width, height, vx, vy)
+    def __init__(self, x, y, width, height, vx , vy, handler):
+        super().__init__(x, y, width, height, vx, vy, handler)
         self.id = uuid.uuid4()
         self.x = x
         self.y = y
@@ -24,14 +24,7 @@ class HunnedSquares(Entity):
         
 
         # Wall collision based bouncing.
-        if self.x < 0:
-            self.vx = -self.vx
-        if self.x + self.width > 1280:
-            self.vx = -self.vx
-        if self.y < 0:
-            self.vy = -self.vy
-        if self.y + self.height > 720:
-            self.vy = -self.vy
+
 
         # Wall collision based sliding
         # if self.x < 0:
