@@ -12,6 +12,7 @@ class EntityHandler:
 
     def add_entity(self, entity):
         self.entities[entity.id] = entity
+        entity.handler = self
 
     def remove_entity(self, entity_id):
         del self.entities[entity_id]

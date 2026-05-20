@@ -2,10 +2,11 @@ from entities.entity import Entity
 import pygame
 import uuid
 from components.control_component import ControlComponent
+from components.box_collider import BoxCollider
 
 class Square(Entity):
-    def __init__(self, x, y, width, height, vx , vy):
-        super().__init__(x, y, width, height, vx, vy)
+    def __init__(self, x, y, width, height, vx , vy, handler):
+        super().__init__(x, y, width, height, vx, vy, handler)
         self.id = uuid.uuid4()
         self.x = x
         self.y = y
@@ -16,7 +17,8 @@ class Square(Entity):
         self.color = (124, 69, 67)
         self.speed = 5
         self.direction = pygame.Vector2(0, 0)
-
+        box_collider = BoxCollider(self, 1, 1, pygame.Rect(x, y, width, height))
+        self.add_component(box_collider)
         
 
     def update(self):
