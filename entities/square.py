@@ -1,8 +1,8 @@
 from entities.entity import Entity
 import pygame
 import uuid
-from components.control_component import ControlComponent
-from components.box_collider import BoxCollider
+from scripts.components.control_component import ControlComponent
+from scripts.components.box_collider import BoxCollider
 
 class Square(Entity):
     def __init__(self, x, y, width, height, vx , vy, handler):

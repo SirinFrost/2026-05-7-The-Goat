@@ -1,4 +1,4 @@
-from components.collider_component import ColliderComponent
+from scripts.components.collider_component import ColliderComponent
 import pygame
 
 class BoxCollider(ColliderComponent):

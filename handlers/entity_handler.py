@@ -1,5 +1,6 @@
 class EntityHandler:
-    def __init__(self):
+    def __init__(self, asset_manager):
+        self.asset_manager = asset_manager
         self.entities = {}
     
     def update(self):

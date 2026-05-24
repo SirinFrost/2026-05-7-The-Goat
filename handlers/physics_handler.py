@@ -1,5 +1,5 @@
 import pygame
-from components.collider_component import ColliderComponent
+from scripts.components.collider_component import ColliderComponent
 
 class PhysicsHandler:
     def __init__(self, entity_handler):
