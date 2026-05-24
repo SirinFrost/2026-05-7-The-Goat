@@ -1,4 +1,4 @@
-from components.component import Component
+from scripts.components.component import Component
 import pygame
 
 class ColliderComponent(Component):

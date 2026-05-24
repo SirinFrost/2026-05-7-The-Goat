@@ -1,6 +1,6 @@
 import pygame
 import uuid
-from components.component import Component
+from scripts.components.component import Component
 
 
 class Entity:

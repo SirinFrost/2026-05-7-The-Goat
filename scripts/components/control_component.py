@@ -1,5 +1,5 @@
 import pygame
-from components.component import Component
+from scripts.components.component import Component
 
 class ControlComponent(Component):
     

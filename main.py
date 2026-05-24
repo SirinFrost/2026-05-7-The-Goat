@@ -7,27 +7,20 @@ from handlers.entity_handler import EntityHandler
 from entities.square import Square
 from entities.hunned_squares import HunnedSquares
 from handlers.physics_handler import PhysicsHandler
+from handlers.asset_manager import AssetManager
+from handlers.window_handler import WindowHandler
+from handlers.world import World
 
 pygame.init()
 
 
 
-def create_window():
-    window = pygame.display.set_mode((1280, 720), pygame.RESIZABLE, vsync=True)
-    return window
-
-def game_loop(window):
-    pygame.display.set_caption("The Goat")
+def game_loop(world):
     running = True
 
-    clock = pygame.time.Clock()
-    timer = 0.0
     # Changing Values here
     x_velocity = 0
     y_velocity = 0
-
-    entity_handler = EntityHandler()
-    physics_handler = PhysicsHandler(entity_handler)
 
     #player = Player(680, 360, 100, 100)
     #entity_handler.add_entity(player)
@@ -47,42 +40,19 @@ def game_loop(window):
         random0to1280 = random.randint(100, 1280)
         random0to720 = random.randint(100, 720)
         randomsize = random.randint(10, 100)
-        rand_square = HunnedSquares(random0to1280 - randomsize, random0to720 - randomsize, randomsize, randomsize, negtentoten1, negtentoten2, entity_handler)
-        entity_handler.add_entity(rand_square)
+        rand_square = HunnedSquares(random0to1280 - randomsize, random0to720 - randomsize, randomsize, randomsize, negtentoten1, negtentoten2, world.entity_handler)
+        world.entity_handler.add_entity(rand_square)
 
     while running:
-        # 1. Event handling
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False 
-        # Anything being drawn on the screen goes AFTER FILLING THE SCREEN
-        window.fill((155, 69, 0))   # clear screen
-        # 2. Update
-        # (game logic goes here)
-        # Draw shapes
-        entity_handler.update()
-        entity_handler.render(window, (0, 0))
-
-        for entity in entity_handler.entities.values():
-            physics_handler.handle_wall_collision(entity)
-
-        physics_handler.update()
-
-        #update window
-        pygame.display.flip()
-        # delta time and clock tick
-        delta_time = clock.tick(60) / 1000.0
-        timer += delta_time
-        if timer >= 1.0:
-            print(clock.get_fps())
-            timer = 0.0
+        running = world.run()
 
     pygame.quit()
 
 
 def main():
-    window = create_window()
-    game_loop(window)
+    world = World()
+    game_loop(world)
+
 
 if __name__ == "__main__":
     main()
