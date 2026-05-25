@@ -7,14 +7,17 @@ import pygame
 
 class World:
     def __init__(self):
-        self.entity_handler = EntityHandler(AssetManager())
-        self.physics_handler = PhysicsHandler(self.entity_handler)
-        self.window_handler = WindowHandler((1280, 720), (1280, 720), pygame.RESIZABLE, "The Goat", True)
-        self.asset_manager = AssetManager()
-        self.chunks = {} # key is "x_y" "1_1" "1_2" "2_1" "2_2" etc.
+        self.chunks = {}
         self.clock = pygame.time.Clock()
         self.delta_time = 0.0
         self.timer = 0.0
+
+        self.asset_manager = AssetManager(self)
+        self.window_handler = WindowHandler(
+            self, (720, 360), (1280, 720), pygame.RESIZABLE, "The Goat", True
+        )
+        self.entity_handler = EntityHandler(self)
+        self.physics_handler = PhysicsHandler(self)
 
     def update(self):
         self.entity_handler.update()
@@ -23,11 +26,29 @@ class World:
         self.physics_handler.update()
 
     def render(self):
-        self.window_handler.frame_buffer.fill((155, 69, 0))
-        self.entity_handler.render(self.window_handler.frame_buffer, (0, 0))
-        self.window_handler.present()
+        frame_buffer = self.window_handler.frame_buffer
+        frame_buffer.fill((2, 69, 0))
+
+        for chunk in self.chunks.values():
+            chunk.render(frame_buffer, (0, 0))
+
+        self.entity_handler.render(frame_buffer, (0, 0))
+
+        window = self.window_handler.window
+        window_size = window.get_size()
+        frame_w, frame_h = self.window_handler.frame_size
+        scale = min(window_size[0] / frame_w, window_size[1] / frame_h)
+        scaled_size = (int(frame_w * scale), int(frame_h * scale))
+        scaled = pygame.transform.scale(frame_buffer, scaled_size)
+
+        window.fill(self.window_handler.letterbox_color)
+        offset = (
+            (window_size[0] - scaled_size[0]) // 2,
+            (window_size[1] - scaled_size[1]) // 2,
+        )
+        window.blit(scaled, offset)
         pygame.display.flip()
-    
+
     def tick(self):
         self.delta_time = self.clock.tick(60) / 1000.0
         self.timer += self.delta_time
@@ -43,10 +64,6 @@ class World:
                 self.window_handler.resize(event.size)
 
         self.update()
-        # for chunk in self.chunks.values():
-        #     chunk.update()
         self.render()
-        # for chunk in self.chunks.values():
-        #     chunk.render()
         self.tick()
         return True
