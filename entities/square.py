@@ -37,18 +37,20 @@ class Square(Entity):
         # if self.y + self.height > 720:
         #     self.vy = -self.vy
 
+        frame_width, frame_height = self.handler.world.window_handler.frame_size
+
         # Wall collision based sliding
         if self.x < 0:
             self.x = 0
             self.vx = 0
-        if self.x + self.width > 1280:
-            self.x = 1280 - self.width
+        if self.x + self.width > frame_width:
+            self.x = frame_width - self.width
             self.vx = 0
         if self.y < 0:
             self.y = 0
             self.vy = 0
-        if self.y + self.height > 720:
-            self.y = 720 - self.height
+        if self.y + self.height > frame_height:
+            self.y = frame_height - self.height
             self.vy = 0
 
         self.x += self.vx

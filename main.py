@@ -2,14 +2,10 @@ import pygame
 import math
 import random
 
-from entities.entity import Entity
-from handlers.entity_handler import EntityHandler
-from entities.square import Square
 from entities.hunned_squares import HunnedSquares
-from handlers.physics_handler import PhysicsHandler
-from handlers.asset_manager import AssetManager
-from handlers.window_handler import WindowHandler
 from handlers.world import World
+from scripts.world.tile import Tile
+from scripts.world.chunk import Chunk
 
 pygame.init()
 
@@ -21,6 +17,23 @@ def game_loop(world):
     # Changing Values here
     x_velocity = 0
     y_velocity = 0
+
+    TILE_SIZE = 16
+    CHUNK_SIZE = 16
+
+    chunk = Chunk(0, 0, CHUNK_SIZE)
+    
+    water = world.asset_manager.get_image("assets/ship_game/water.png")
+    water_tile = Tile(0, 0, water, TILE_SIZE)
+    
+    for row in range(CHUNK_SIZE):
+        for col in range(CHUNK_SIZE):
+            tile = Tile(col, row, water, TILE_SIZE)
+            chunk.add_tile(tile)
+
+    world.chunks[f"0_0"] = chunk
+
+    frame_width, frame_height = world.window_handler.frame_size
 
     #player = Player(680, 360, 100, 100)
     #entity_handler.add_entity(player)
@@ -37,10 +50,10 @@ def game_loop(world):
         y_velocity = random.randint(-10, 10)
         negtentoten1 = random.randint(-10, 10)
         negtentoten2 = random.randint(-10, 10)
-        random0to1280 = random.randint(100, 1280)
-        random0to720 = random.randint(100, 720)
+        random_x = random.randint(100, frame_width)
+        random_y = random.randint(100, frame_height)
         randomsize = random.randint(10, 100)
-        rand_square = HunnedSquares(random0to1280 - randomsize, random0to720 - randomsize, randomsize, randomsize, negtentoten1, negtentoten2, world.entity_handler)
+        rand_square = HunnedSquares(random_x - randomsize, random_y - randomsize, randomsize, randomsize, negtentoten1, negtentoten2, world.entity_handler)
         world.entity_handler.add_entity(rand_square)
 
     while running:
