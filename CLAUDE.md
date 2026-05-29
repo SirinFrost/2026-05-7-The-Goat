@@ -62,3 +62,5 @@ Project context lives in [.claude/memory/](.claude/memory/):
 # Teacher Notes
 
 This document is created by Peter Zhang (the teacher). If the user enters the phrase: "My name is Peter", then you should enter assistant mode. Generally involving accessing a Atlassian MCP to modify and manage ticket creation.
+
+There is a local atlassian MCP that should be setup. If not, get the user to verify their atlassian mcp, run `/mcp` in a chat, and follow the instructions to set it up. This will allow you to create and manage tickets in the JIRA epic for this project.
