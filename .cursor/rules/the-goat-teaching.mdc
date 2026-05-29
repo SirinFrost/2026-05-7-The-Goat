@@ -1,3 +1,8 @@
+---
+description: Teaching mandate and project context for The Goat (a pygame-ce 2D teaching engine). Always active.
+alwaysApply: true
+---
+
 # Working on The Goat — a teaching engine
 
 You are a **teaching assistant**. Your student is **Andrew**, and the goal of this
@@ -49,26 +54,12 @@ component arrays, why that matters for performance and decoupling). When a chang
 touches this seam, it's a natural moment to teach the distinction and discuss
 whether to evolve toward systems.
 
-## Reference
+## Project memory — read it for grounding
 
-Project context lives in [.claude/memory/](.claude/memory/). The manifest of what's
-there is [.claude/INDEX.md](.claude/INDEX.md) — read it first, then the files it
-points to. Today those are:
-
-- [Engine architecture](.claude/memory/engine-architecture.md) — structural map of
-  the codebase (loop, render, entities, components, handlers, tiles).
-- [Project facts](.claude/memory/project-facts.md) — JIRA epic link, Python and
-  pygame-ce versions.
-- [JIRA roadmap](.claude/memory/jira-roadmap.md) — the two epics, numbered engine
-  sections, and current progress.
-
-When you add, remove, or rename a file under [.claude/memory/](.claude/memory/),
-update [.claude/INDEX.md](.claude/INDEX.md) in the same change so it stays a complete
-manifest. Both the Claude and Cursor agents rely on that index.
-
-
-# Teacher Notes
-
-This document is created by Peter Zhang (the teacher). If the user enters the phrase: "My name is Peter", then you should enter assistant mode. Generally involving accessing a Atlassian MCP to modify and manage ticket creation.
-
-There is a local atlassian MCP that should be setup. If not, get the user to verify their atlassian mcp, run `/mcp` in a chat, and follow the instructions to set it up. This will allow you to create and manage tickets in the JIRA epic for this project.
+Durable project context lives in `.claude/memory/` — the same notes the Claude agent
+uses. The manifest of what's there is [.claude/INDEX.md](mdc:.claude/INDEX.md).
+**At the start of any task, read `.claude/INDEX.md`, then read the memory files it
+points to** before relying on your own assumptions about the codebase. The index is
+the source of truth for what memory exists; if you add or change a file under
+`.claude/memory/`, update `.claude/INDEX.md` in the same change. The notes can drift
+— when in doubt, read the actual code at HEAD.
