@@ -1,0 +1,18 @@
+{
+    "tile_images": {
+        "0": "assets/ship_game/water.png",
+        "1": "assets/ship_game/rock.png"
+    },
+    "chunks": [
+        {
+            "world_chunk_x": 0,
+            "world_chunk_y": 0,
+            "tiles": [0, 0, 1, 1, 0, 1]
+        },
+        {
+            "world_chunk_x": 1,
+            "world_chunk_y": 0,
+            "tiles": [1, 1, 1, 0, 0, 1]
+        }
+    ]
+}

@@ -6,6 +6,7 @@ from entities.hunned_squares import HunnedSquares
 from handlers.world import World
 from scripts.world.tile import Tile
 from scripts.world.chunk import Chunk
+from scripts.world.level_loader import LevelLoader
 
 pygame.init()
 
@@ -22,16 +23,7 @@ def game_loop(world):
     CHUNK_SIZE = 16
 
     chunk = Chunk(0, 0, CHUNK_SIZE)
-    
-    water = world.asset_manager.get_image("assets/ship_game/water.png")
-    water_tile = Tile(0, 0, water, TILE_SIZE)
-    
-    for row in range(CHUNK_SIZE):
-        for col in range(CHUNK_SIZE):
-            tile = Tile(col, row, water, TILE_SIZE)
-            chunk.add_tile(tile)
-
-    world.chunks[f"0_0"] = chunk
+    level_loader = LevelLoader(world, "assets/levels/level_01.json")
 
     frame_width, frame_height = world.window_handler.frame_size
 
