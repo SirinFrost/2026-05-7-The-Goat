@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "atlassian": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://mcp.atlassian.com/v1/sse"
+      ],
+      "env": {}
+    }
+  }
+}
