@@ -7,6 +7,7 @@ from handlers.world import World
 from scripts.world.level_loader import LevelLoader
 from handlers.particle_handler import ParticleHandler
 
+
 pygame.init()
 
 
