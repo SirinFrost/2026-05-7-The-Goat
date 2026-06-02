@@ -23,5 +23,5 @@ class LevelLoader:
                 path = self.tile_images[str(tile_id)]
                 surface = world.asset_manager.get_image(path)
                 chunk.static_tiles[i] = Tile(i % self.CHUNK_SIZE, i // self.CHUNK_SIZE, surface, self.TILE_SIZE)
-            chunk_renderer = ChunkRenderer(chunk)
+            chunk_renderer = ChunkRenderer(chunk, self.TILE_SIZE)
             world.chunks[chunk.id] = chunk_renderer

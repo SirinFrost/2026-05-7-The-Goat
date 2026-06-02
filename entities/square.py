@@ -53,8 +53,9 @@ class Square(Entity):
             self.y = frame_height - self.height
             self.vy = 0
 
-        self.x += self.vx
-        self.y += self.vy
+        dt = self.handler.world.delta_time
+        self.x += self.vx * dt
+        self.y += self.vy * dt
 
         self.rect.x = self.x
         self.rect.y = self.y

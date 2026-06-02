@@ -15,33 +15,13 @@ class HunnedSquares(Entity):
         self.rect = pygame.draw.rect(self.image, (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255), 128), self.image.get_rect())
         self.speed = 5
         self.direction = pygame.Vector2(0, 0)
-
         
 
     def update(self):
         super().update()
-        # Keyboard controlled movement
-        
-
-        # Wall collision based bouncing.
-
-
-        # Wall collision based sliding
-        # if self.x < 0:
-        #     self.x = 0
-        #     self.vx = 0
-        # if self.x + self.width > 1280:
-        #     self.x = 1280 - self.width
-        #     self.vx = 0
-        # if self.y < 0:
-        #     self.y = 0
-        #     self.vy = 0
-        # if self.y + self.height > 720:
-        #     self.y = 720 - self.height
-        #     self.vy = 0
-
-        self.x += self.vx
-        self.y += self.vy
+        dt = self.handler.world.delta_time
+        self.x += self.vx * dt
+        self.y += self.vy * dt
 
         self.rect.x = self.x
         self.rect.y = self.y
