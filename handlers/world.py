@@ -8,6 +8,14 @@ from handlers.physics_handler import PhysicsHandler
 from handlers.window_handler import WindowHandler
 from handlers.particle_handler import ParticleHandler
 from handlers.triangle_particle_handler import TriangleParticleHandler
+from scripts.components.state_handler import StateHandler
+from scripts.components.collider_component import ColliderComponent
+
+
+from scripts.components.spawn import SpawnSquare, SpawnTriangle
+from entities.entity import Entity
+
+
 
 
 class World:
@@ -24,11 +32,26 @@ class World:
         self.particle_handler = ParticleHandler(self)
         self.physics_handler = PhysicsHandler(self)
         self.triangle_particle_handler = TriangleParticleHandler(self)
-        
+
+
+        spawner = Entity(0, 0, 100, 100, 0, 0, self.entity_handler)
+        self.entity_handler.add_entity(spawner)
+
+        spawner.particle_handler = self.particle_handler
+        spawner.triangle_particle_handler = self.triangle_particle_handler
+
+        sh = StateHandler()
+        sh.add_state(SpawnSquare("normal"))
+        sh.add_state(SpawnTriangle("triangle"))
+        spawner.add_component(sh)
+        self.state_handler = sh
+
+
     def update(self):
         self.entity_handler.update()
         for entity in self.entity_handler.entities.values():
-            self.physics_handler.handle_wall_collision(entity)
+            if entity.get_component(ColliderComponent) is not None:
+                self.physics_handler.handle_wall_collision(entity)
         self.physics_handler.update()
         self.particle_handler.update()
         self.triangle_particle_handler.update()
@@ -72,21 +95,10 @@ class World:
                 return False
             if event.type == pygame.VIDEORESIZE:
                 self.window_handler.resize(event.size)
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                self.state_handler.set_state("triangle" if self.state_handler.current_state == "normal" else "normal")
 
-        for i in range(10):
-            x_velocity = random.randint(-100, 100)
-            y_velocity = random.randint(-100, 100)
-            self.particle_handler.add_particle(0, 0, 2, (255, 0, 0), x_velocity, y_velocity, 1.0)
-        
-        for i in range(10):
-            x_velocity = random.randint(-100, 100)
-            y_velocity = random.randint(-100, 100)
-            self.triangle_particle_handler.add_particle(
-                360, 180, 2, (0, 255, 0),
-                random.randint(-100, 100), random.randint(-100, 100), 1.0,
-                angle=random.uniform(0, math.tau),           # starting orientation
-                angular_velocity=random.uniform(-4, 4),      # ~ full turn every 1–2 sec
-                )
+
 
         self.tick()
         self.update()
