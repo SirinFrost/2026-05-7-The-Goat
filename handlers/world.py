@@ -1,6 +1,5 @@
 import pygame
-import random
-import math
+
 
 from handlers.entity_handler import EntityHandler
 from handlers.asset_manager import AssetManager
@@ -8,12 +7,13 @@ from handlers.physics_handler import PhysicsHandler
 from handlers.window_handler import WindowHandler
 from handlers.particle_handler import ParticleHandler
 from handlers.triangle_particle_handler import TriangleParticleHandler
-from scripts.components.state_handler import StateHandler
-from scripts.components.collider_component import ColliderComponent
+
+from handlers.scene_manager import SceneManager
+from scripts.scenes.menu_scene import MenuScene
+from scripts.scenes.play_scene import PlayScene
 
 
-from scripts.components.spawn import SpawnSquare, SpawnTriangle
-from entities.entity import Entity
+
 
 
 
@@ -32,44 +32,21 @@ class World:
         self.particle_handler = ParticleHandler(self)
         self.physics_handler = PhysicsHandler(self)
         self.triangle_particle_handler = TriangleParticleHandler(self)
-
-
-        spawner = Entity(0, 0, 100, 100, 0, 0, self.entity_handler)
-        self.entity_handler.add_entity(spawner)
-
-        spawner.particle_handler = self.particle_handler
-        spawner.triangle_particle_handler = self.triangle_particle_handler
-
-        sh = StateHandler()
-        sh.add_state(SpawnSquare("normal"))
-        sh.add_state(SpawnTriangle("triangle"))
-        spawner.add_component(sh)
-        self.state_handler = sh
-
+        self.scene_manager = SceneManager(self)
+        self.scene_manager.add_scene(MenuScene())
+        self.scene_manager.add_scene(PlayScene())
 
     def update(self):
-        self.entity_handler.update()
-        for entity in self.entity_handler.entities.values():
-            if entity.get_component(ColliderComponent) is not None:
-                self.physics_handler.handle_wall_collision(entity)
-        self.physics_handler.update()
-        self.particle_handler.update()
-        self.triangle_particle_handler.update()
+        self.scene_manager.update()
 
     def render(self):
         frame_buffer = self.window_handler.frame_buffer
-        frame_buffer.fill((2, 69, 0))
-
-        for chunk in self.chunks.values():
-            chunk.render(frame_buffer, (0, 0))
-
-        self.entity_handler.render(frame_buffer, (0, 0))
-        self.particle_handler.render(frame_buffer, (0, 0))
-        self.triangle_particle_handler.render(frame_buffer, (0, 0))
-
         window = self.window_handler.window
         window_size = window.get_size()
         frame_w, frame_h = self.window_handler.frame_size
+
+        self.scene_manager.render(frame_buffer)
+
         scale = min(window_size[0] / frame_w, window_size[1] / frame_h)
         scaled_size = (int(frame_w * scale), int(frame_h * scale))
         scaled = pygame.transform.scale(frame_buffer, scaled_size)
@@ -95,10 +72,8 @@ class World:
                 return False
             if event.type == pygame.VIDEORESIZE:
                 self.window_handler.resize(event.size)
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                self.state_handler.set_state("triangle" if self.state_handler.current_state == "normal" else "normal")
-
-
+            else:
+                self.scene_manager.handle_event(event)
 
         self.tick()
         self.update()
