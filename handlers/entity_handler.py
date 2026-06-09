@@ -4,8 +4,20 @@ class EntityHandler:
         self.entities = {}
 
     def update(self):
-        for entity in self.entities.values():
+        # Iterate a snapshot so an entity that removes itself this frame
+        # (e.g. an expired projectile) can't mutate the dict mid-loop.
+        for entity in list(self.entities.values()):
             entity.update()
+        self.remove_dead()
+
+    def remove_dead(self):
+        dead_ids = [
+            entity_id
+            for entity_id, entity in self.entities.items()
+            if getattr(entity, "dead", False)
+        ]
+        for entity_id in dead_ids:
+            self.kill_entity(entity_id)
 
     def render(self, window, ref_pos):
         for entity in self.entities.values():
