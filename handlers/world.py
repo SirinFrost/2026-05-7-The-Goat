@@ -11,6 +11,8 @@ from handlers.triangle_particle_handler import TriangleParticleHandler
 from handlers.scene_manager import SceneManager
 from scripts.scenes.menu_scene import MenuScene
 from scripts.scenes.play_scene import PlayScene
+from scripts.scenes.shop_scene import ShopScene
+from scripts.upgrades import Upgrades
 
 
 
@@ -24,6 +26,19 @@ class World:
         self.clock = pygame.time.Clock()
         self.delta_time = 0.0
         self.timer = 0.0
+        self.player = None  # set by the active scene; entities seek it
+        # Two rectangles, both centered on the same point:
+        #   map_size   = the green play area (the "map" the background fill covers)
+        #   world_size = the outer border/wall the ship is clamped to. It's larger than
+        #                the map, so the ship can sail off the green into a void before
+        #                hitting the wall.
+        self.map_size = (7168, 4032)
+        self.world_size = (9728, 6592)
+
+        # Player-wide progression, kept on the world so it survives scene switches
+        # (the shop spends money to raise upgrade levels; the ship reads the values).
+        self.money = 0
+        self.upgrades = Upgrades()
 
         self.asset_manager = AssetManager(self)
         self.window_handler = WindowHandler(
@@ -35,6 +50,20 @@ class World:
         self.scene_manager = SceneManager(self)
         self.scene_manager.add_scene(MenuScene())
         self.scene_manager.add_scene(PlayScene())
+        self.scene_manager.add_scene(ShopScene())
+
+    def map_rect(self):
+        """The green play area as a rect in world coordinates, centered inside the
+        larger world border. Single source of truth for the playable boundary: the
+        ship clamps to it, bullets die at it, and the background is painted over it."""
+        map_w, map_h = self.map_size
+        world_w, world_h = self.world_size
+        return pygame.Rect(
+            (world_w - map_w) // 2,
+            (world_h - map_h) // 2,
+            map_w,
+            map_h,
+        )
 
     def update(self):
         self.scene_manager.update()
